@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  postgres_db:
+    image: postgres:15 # Hoặc phiên bản bạn muốn
+    container_name: my_postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432" # Map cổng 5432 của Docker vào 5432 của máy thật
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
