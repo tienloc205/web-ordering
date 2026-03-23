@@ -1,0 +1,51 @@
+1. Entity Layer (Tầng thực thể) - package com.example.backend.entity
+Đây là nơi bạn định nghĩa các Class Java tương ứng với các bảng trong Database.
+Nhiệm vụ: Ánh xạ dữ liệu từ DB lên Java (Sử dụng Hibernate/JPA).
+Ví dụ: Product.java, Order.java, Table.java, User.java.
+
+
+2. Repository Layer (Tầng truy vấn) - package com.example.backend.repository
+Đây là các Interface kế thừa từ JpaRepository.
+Nhiệm vụ: Thực hiện các câu lệnh SQL (Select, Insert, Update, Delete) một cách tự động. Bạn không cần viết SQL
+thuần, chỉ cần gọi hàm.
+Ví dụ: ProductRepository, OrderRepository.
+
+
+3. Service Layer (Tầng nghiệp vụ) - package com.example.backend.service
+Đây là "Bộ não" của ứng dụng. Mọi logic phức tạp phải nằm ở đây.
+Nhiệm vụ:
+Tính toán tổng tiền đơn hàng.
+Kiểm tra xem bàn đó có đang trống hay không trước khi khách đặt.
+Xử lý logic thanh toán.
+Ví dụ: OrderService, ProductService.
+
+
+4. Controller Layer (Tầng giao tiếp) - package com.example.backend.controller
+Nơi định nghĩa các API Endpoints mà Frontend sẽ gọi.
+Nhiệm vụ: Nhận Request từ khách, gọi xuống Service để xử lý và trả về Response (JSON). Không nên viết logic
+tính toán ở đây.
+Ví dụ: ProductController, OrderController.
+
+
+5. DTO Layer (Data Transfer Object) - package com.example.backend.dto
+Đây là các class "vận chuyển" dữ liệu.
+Nhiệm vụ: Thay vì trả về toàn bộ thông tin trong DB (Entity), bạn chỉ trả về những thứ Frontend cần.
+Ví dụ: Bảng User có chứa password_hash, bạn không được trả về FE. Bạn dùng UserDTO để giấu đi cái password đó.
+Gồm 2 loại: RequestDTO (dữ liệu khách gửi lên) và ResponseDTO (dữ liệu trả về cho khách).
+
+
+6. Exception Layer (Xử lý lỗi) - package com.example.backend.exception
+Nhiệm vụ: Tạo ra một bộ xử lý lỗi tập trung.
+Ví dụ: Nếu khách gọi món đã hết hàng, bạn tung ra lỗi OutOfStockException. Một class "Global Exception Handler"
+sẽ bắt lỗi này và trả về JSON thông báo cho FE: { "error": "Món này đã hết rồi bạn ơi!" }.
+
+
+7. Configuration Layer (Cấu hình) - package com.example.backend.config
+Nhiệm vụ: Chứa các file cấu hình hệ thống.
+CORS Config: Cho phép Frontend gọi API.
+Security Config: Cấu hình JWT, phân quyền Admin/Khách.
+Swagger Config: Tự động tạo tài liệu API.
+
+
+Sơ đồ luồng dữ liệu (Data Flow) thực tế:
+Khách (FE) ➔ Controller ➔ Service ➔ Repository ➔ Database (Postgres)
