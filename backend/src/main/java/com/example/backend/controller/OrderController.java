@@ -2,12 +2,13 @@ package com.example.backend.controller;
 
 
 import com.example.backend.dto.OrderRequestDTO;
-import com.example.backend.entities.Order;
+import com.example.backend.dto.OrderResponseDTO;
 import com.example.backend.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,10 +18,16 @@ import java.util.Map;
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping("/")
+    @GetMapping
+    public ResponseEntity<?> getAllOrders() {
+        List<OrderResponseDTO> orderList = orderService.getAllOrders();
+        return ResponseEntity.ok(orderList);
+    }
+
+    @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO request) {
         try {
-            Order newOrder = orderService.placeOrder(request);
+            OrderResponseDTO newOrder = orderService.placeOrder(request);
 
             return ResponseEntity.ok(Map.of(
                     "message", "Đặt món thành công",

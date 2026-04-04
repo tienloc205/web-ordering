@@ -7,13 +7,12 @@ import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
-public class DishResponseDTO {
-    private Long id;
+public class DishRequestDTO {
     private String name;
     private String description;
     private BigDecimal price;
     private String imageUrl;
-    private String categoryName;
+    private Long categoryId;
     private Integer availableStock;
     private Boolean isActive;
 }

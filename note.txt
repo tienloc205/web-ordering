@@ -3,4 +3,51 @@ task management web
 fe reactJs
 be node.Js
 
-db 
+db
+
+
+NHÓM 1: DÀNH CHO KHÁCH HÀNG (Customer)
+Mục tiêu: Giúp khách theo dõi đơn hàng và tương tác với nhà hàng.
+1. API Lấy thông tin bàn (Verify Table)
+Tác dụng: Khi khách quét mã QR (ví dụ: ?tableId=5), FE gọi API này để kiểm tra bàn số 5 có tồn tại không và trạng thái hiện tại.
+Input: tableId (Long)
+Output: Thông tin bàn (Số bàn, trạng thái).
+2. API Theo dõi đơn hàng (Track Order)
+Tác dụng: Khách xem món mình đặt đang ở giai đoạn nào (Đang nấu, Đã phục vụ...).
+Input: orderId (Long)
+Output: Danh sách món, tổng tiền, trạng thái đơn hàng (PENDING, COOKING, SERVED...).
+3. API Yêu cầu thanh toán (Request Bill)
+Tác dụng: Khách bấm nút "Thanh toán" trên web để báo cho nhân viên.
+Input: orderId (Long), paymentMethod (CASH/BANK_TRANSFER)
+Output: Thông báo thành công + Link QR chuyển khoản (nếu chọn BANK_TRANSFER).
+NHÓM 2: DÀNH CHO NHÂN VIÊN/ADMIN (Staff/Admin)
+Mục tiêu: Quản lý vận hành nhà hàng theo thời gian thực.
+4. API Quản lý danh sách Bàn (Table Dashboard)
+Tác dụng: Hiển thị sơ đồ nhà hàng (Bàn nào trống, bàn nào đang ăn, bàn nào chờ thanh toán).
+Input: Không có.
+Output: Danh sách tất cả các bàn kèm trạng thái hiện tại.
+5. API Danh sách đơn hàng cần xử lý (Active Orders)
+Tác dụng: Dành cho bếp hoặc nhân viên phục vụ xem những đơn hàng mới chưa nấu hoặc chưa giao.
+Input: Lọc theo trạng thái (Ví dụ: status=PENDING).
+Output: Danh sách đơn hàng xếp theo thời gian (cũ nhất lên đầu).
+6. API Cập nhật trạng thái Đơn hàng (Update Order Status)
+Tác dụng: Nhân viên bấm "Bắt đầu nấu", "Đã xong món" hoặc "Hoàn thành đơn".
+Input: orderId (Long), newStatus (String).
+Output: Thông tin đơn hàng sau khi cập nhật.
+7. API Quản lý kho món ăn (Stock/Menu Management)
+Tác dụng: Admin cập nhật số lượng món ăn có sẵn vào đầu ngày hoặc ẩn món khi hết.
+Input: dishId (Long), availableStock (Integer), isActive (Boolean).
+Output: Món ăn đã được cập nhật.
+8. API Thống kê doanh thu (Revenue Report)
+Tác dụng: Xem tổng số đơn và số tiền kiếm được trong ngày/tháng.
+Input: fromDate, toDate.
+Output: Tổng doanh thu, số lượng đơn hàng thành công, top món bán chạy.
+9. API Quản lý Món ăn (CRUD Dishes)
+Tác dụng: Thêm món mới, sửa giá, đổi ảnh món ăn.
+Input: DishRequestDTO (Tên, giá, ảnh, id category...).
+Output: Thông tin món ăn sau khi lưu.
+NHÓM 3: HỆ THỐNG (Auth)
+10. API Đăng nhập (Login)
+Tác dụng: Dành cho Admin/Nhân viên truy cập vào trang quản trị. Khách hàng không cần API này.
+Input: username, password.
+Output: Token (JWT) và quyền hạn (Role: ADMIN/STAFF).
