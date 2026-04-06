@@ -22,13 +22,13 @@ public class Order {
     private BigDecimal totalPrice;
 
     @Enumerated(EnumType.STRING)
-    private Enum.OrderStatus status = Enum.OrderStatus.PENDING;
+    private Constants.OrderStatus status = Constants.OrderStatus.PENDING;
 
     @Enumerated(EnumType.STRING)
-    private Enum.PaymentStatus paymentStatus = Enum.PaymentStatus.UNPAID;
+    private Constants.PaymentStatus paymentStatus = Constants.PaymentStatus.UNPAID;
 
     @Enumerated(EnumType.STRING)
-    private Enum.PaymentMethod paymentMethod;
+    private Constants.PaymentMethod paymentMethod;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

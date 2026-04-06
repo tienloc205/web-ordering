@@ -7,6 +7,7 @@ import com.example.backend.service.DishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -19,6 +20,7 @@ public class AdminDishController {
     private final DishService dishService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createDish(@RequestBody DishRequestDTO request) {
         try {
             DishResponseDTO newDish = dishService.createDish(request);
@@ -38,6 +40,7 @@ public class AdminDishController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateDish(@PathVariable Long id, @RequestBody DishRequestDTO request) {
         try {
             DishResponseDTO updatedDish = dishService.updateDish(id, request);
@@ -56,6 +59,7 @@ public class AdminDishController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteDish(@PathVariable Long id) {
         try {
             dishService.deleteDish(id);

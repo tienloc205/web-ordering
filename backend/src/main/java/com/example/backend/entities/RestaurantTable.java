@@ -15,7 +15,7 @@ public class RestaurantTable {
     private String tableNumber;
 
     @Enumerated(EnumType.STRING)
-    private Enum.TableStatus status = Enum.TableStatus.EMPTY;
+    private Constants.TableStatus status = Constants.TableStatus.EMPTY;
 
     private String qrCodeUrl;
 }

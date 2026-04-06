@@ -23,7 +23,7 @@ public class User {
     private String fullName;
 
     @Enumerated(EnumType.STRING)
-    private Enum.UserRole role;
+    private Constants.UserRole role;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();

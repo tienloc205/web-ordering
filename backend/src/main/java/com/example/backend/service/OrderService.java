@@ -5,7 +5,7 @@ import com.example.backend.dto.OrderItemRequestDTO;
 import com.example.backend.dto.OrderRequestDTO;
 import com.example.backend.dto.OrderResponseDTO;
 import com.example.backend.entities.*;
-import com.example.backend.entities.Enum;
+import com.example.backend.entities.Constants;
 import com.example.backend.mapper.OrderMapper;
 import com.example.backend.repository.DishRepository;
 import com.example.backend.repository.OrderRepository;
@@ -35,6 +35,13 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    public OrderResponseDTO getOrderById(Long id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Đơn hàng với ID " + id + " không tồn tại"));
+
+        return orderMapper.toResponseDTO(order);
+    }
+
     //create an order
     @Transactional
     public OrderResponseDTO placeOrder(OrderRequestDTO request) {
@@ -45,9 +52,9 @@ public class OrderService {
         // 2. Khởi tạo đối tượng Order
         Order order = new Order();
         order.setTable(table);
-        order.setStatus(Enum.OrderStatus.PENDING);
-        order.setPaymentStatus(Enum.PaymentStatus.UNPAID);
-        order.setPaymentMethod(Enum.PaymentMethod.valueOf(request.getPaymentMethod()));
+        order.setStatus(Constants.OrderStatus.PENDING);
+        order.setPaymentStatus(Constants.PaymentStatus.UNPAID);
+        order.setPaymentMethod(Constants.PaymentMethod.valueOf(request.getPaymentMethod()));
 
         List<OrderItem> orderItems = new ArrayList<>();
         BigDecimal totalPrice = BigDecimal.ZERO;
@@ -89,7 +96,7 @@ public class OrderService {
         order.setTotalPrice(totalPrice);
 
         // 5. Cập nhật trạng thái bàn sang "Đang có khách" (OCCUPIED)
-        table.setStatus(Enum.TableStatus.OCCUPIED);
+        table.setStatus(Constants.TableStatus.OCCUPIED);
         tableRepository.save(table);
 
         // 6. Lưu đơn hàng vào DB và trả về DTO

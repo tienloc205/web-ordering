@@ -24,6 +24,12 @@ public class OrderController {
         return ResponseEntity.ok(orderList);
     }
 
+    @ GetMapping("/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
+        OrderResponseDTO order = orderService.getOrderById(id);
+        return ResponseEntity.ok(order);
+    }
+
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO request) {
         try {
