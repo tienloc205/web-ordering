@@ -40,4 +40,14 @@ public class TableController {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+
+    @GetMapping("{id}/qrCode")
+    public ResponseEntity<?> getTableQRCode(@PathVariable Long id) {
+        try {
+            String qrData = tableService.getTableQRCode(id);
+            return ResponseEntity.ok(Map.of("qrCode", qrData));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

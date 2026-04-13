@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/dish/**").permitAll()
                         .requestMatchers("/api/order/**").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/api/table/**").authenticated()
+                        .requestMatchers("/api/table/**").permitAll()
                         .anyRequest().authenticated() // CÁC API KHÁC phải đăng nhập
                 );
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

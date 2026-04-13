@@ -17,5 +17,6 @@ public class RestaurantTable {
     @Enumerated(EnumType.STRING)
     private Constants.TableStatus status = Constants.TableStatus.EMPTY;
 
+    @Column(columnDefinition = "TEXT")
     private String qrCodeUrl;
 }
