@@ -32,6 +32,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/dish/**").permitAll()
                         .requestMatchers("/api/order/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
                         .requestMatchers("/api/table/**").permitAll()
                         .anyRequest().authenticated() // CÁC API KHÁC phải đăng nhập
                 );

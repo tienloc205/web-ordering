@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,5 +27,16 @@ public class DishController {
     public ResponseEntity<Map<String, List<DishResponseDTO>>> getMenu(){
         Map<String, List<DishResponseDTO>> menu = dishService.getMenu();
         return ResponseEntity.ok(menu);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Map<String, List<DishResponseDTO>>> search(@RequestParam String keyword) {
+        // Nếu từ khóa rỗng, trả về map trống hoặc xử lý tùy ý
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return ResponseEntity.ok(dishService.getMenu());
+        }
+
+        Map<String, List<DishResponseDTO>> results = dishService.searchDishesGroupedByCategory(keyword);
+        return ResponseEntity.ok(results);
     }
 }

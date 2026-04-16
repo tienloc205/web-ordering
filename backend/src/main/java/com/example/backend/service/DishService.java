@@ -93,4 +93,18 @@ public class DishService {
         dish.setIsActive(false);
         dishRepository.save(dish);
     }
+
+    public Map<String, List<DishResponseDTO>> searchDishesGroupedByCategory(String keyword) {
+        // 1. Tìm danh sách món ăn khớp với từ khóa
+        List<Dish> dishes = dishRepository.searchByName(keyword);
+
+        // 2. Chuyển đổi List<Entity> sang List<DTO> và nhóm theo CategoryName
+        return dishes.stream()
+                .map(dishMapper::toResponseDTO)
+                .collect(Collectors.groupingBy(
+                        DishResponseDTO::getCategoryName,
+                        LinkedHashMap::new, // Giữ thứ tự xuất hiện của Category
+                        Collectors.toList()
+                ));
+    }
 }
